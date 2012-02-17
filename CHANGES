@@ -40,10 +40,10 @@ Changes
               pattern2
               pattern3
 
- That is, after ``package_data =``, give the name of a package, followed by
- an ``=``, followed by any number of whitespace separated wildcard patterns (or
- actual filenames relative to the package).  Under this scheme, whitespace is
- not allowed in the patterns themselves.
+  That is, after ``package_data =``, give the name of a package, followed by
+  an ``=``, followed by any number of whitespace separated wildcard patterns (or
+  actual filenames relative to the package).  Under this scheme, whitespace is
+  not allowed in the patterns themselves.
 
 
 0.2.5 (2011-07-21)
