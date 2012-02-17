@@ -2,7 +2,7 @@ Changes
 =========
 
 
-0.2.6 (unreleased)
+0.2.6 (2012-02-17)
 ------------------
 
 - Added support for setuptools entry points in an ``[entry_points]`` section of
