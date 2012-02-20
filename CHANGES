@@ -2,7 +2,7 @@ Changes
 =========
 
 
-0.2.7 (unreleased)
+0.2.7 (2012-02-20)
 ------------------
 
 - If no extension modules or entry points are defined in the setup.cfg, don't
