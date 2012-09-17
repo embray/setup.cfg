@@ -5,7 +5,12 @@ Changes
 0.2.8 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Improved handling of packages where the packages_root option is set. That is,
+  the Python package is not directly in the root of the source tree, but is in
+  some sub-directory.  Now the packages_root directory is prepended to
+  sys.path while processing the setup.cfg and running setup hooks.
+
+- Upgraded the shipped distribute_setup.py to the latest for distribute 0.6.28
 
 
 0.2.7 (2012-02-20)
