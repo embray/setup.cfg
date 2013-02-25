@@ -61,7 +61,6 @@ uses its own machinery to install itself)::
  keywords =
      setup
      distutils
-
  [files]
  packages = d2to1
 

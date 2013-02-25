@@ -10,7 +10,19 @@ Changes
   some sub-directory.  Now the packages_root directory is prepended to
   sys.path while processing the setup.cfg and running setup hooks.
 
+- Added support for the Keywords metadata field via the keywords option in the
+  [metadata] section of setup.cfg.
+
+- Fixed a missing import that caused a misleading exception when setup.cfg is
+  missing.
+
 - Upgraded the shipped distribute_setup.py to the latest for distribute 0.6.28
+
+- Added a few basic functional tests, along with an infrastructure to add more
+  as needed.  They can be run with nose and possibly with py.test though the
+  latter hasn't been tested.
+
+- Improved hook imports to work better with namespace packages.
 
 
 0.2.7 (2012-02-20)
