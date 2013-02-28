@@ -11,7 +11,7 @@ Changes
   sys.path while processing the setup.cfg and running setup hooks.
 
 - Added support for the Keywords metadata field via the keywords option in the
-  [metadata] section of setup.cfg.
+  ``[metadata]`` section of setup.cfg.
 
 - Fixed a missing import that caused a misleading exception when setup.cfg is
   missing.
@@ -23,6 +23,11 @@ Changes
   latter hasn't been tested.
 
 - Improved hook imports to work better with namespace packages.
+
+- Added support for the extra_files option of the ``[files]`` section in
+  setup.cfg.  This was a feature from distutils2 that provided an alternative
+  to MANIFEST.in for including additional files in source distributions (it
+  does not yet support wildcard patterns but maybe it should?)
 
 
 0.2.7 (2012-02-20)
