@@ -32,6 +32,9 @@ Changes
 - Added support for the tests_require setup argument from setuptools via
   the [backwards_compat] section in setup.cfg.
 
+- Supports Python 3 natively without 2to3.  This makes Python 3 testing of
+  d2to1 easier to support.
+
 
 0.2.7 (2012-02-20)
 ------------------
