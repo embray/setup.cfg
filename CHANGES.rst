@@ -29,6 +29,9 @@ Changes
   to MANIFEST.in for including additional files in source distributions (it
   does not yet support wildcard patterns but maybe it should?)
 
+- Added support for the tests_require setup argument from setuptools via
+  the [backwards_compat] section in setup.cfg.
+
 
 0.2.7 (2012-02-20)
 ------------------
