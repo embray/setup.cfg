@@ -2,7 +2,7 @@ Changes
 =========
 
 
-0.2.8 (unreleased)
+0.2.8 (2013-03-05)
 ------------------
 
 - Improved handling of packages where the packages_root option is set. That is,
