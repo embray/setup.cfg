@@ -7,6 +7,12 @@ to be an installation dependency for our packages yet--it is still too unstable
 (the latest version on PyPI doesn't even install).
 """
 
+# These first two imports are not used, but are needed to get around an
+# irritating Python bug that can crop up when using ./setup.py test.
+# See: http://www.eby-sarna.com/pipermail/peak/2010-May/003355.html
+import multiprocessing
+import logging
+
 import os
 import re
 import sys
@@ -66,7 +72,8 @@ D1_D2_SETUP_ARGS = {
     # Not supported in distutils2, but provided for
     # backwards compatibility with setuptools
     "use_2to3": ("backwards_compat", "use_2to3"),
-    "zip_safe": ("backwards_compat", "zip_safe")
+    "zip_safe": ("backwards_compat", "zip_safe"),
+    "tests_require": ("backwards_compat", "tests_require"),
 }
 
 # setup() arguments that can have multiple values in setup.cfg
@@ -80,6 +87,7 @@ MULTI_FIELDS = ("classifiers",
                 "data_files",
                 "scripts",
                 "py_modules",
+                "tests_require",
                 "cmdclass")
 
 # setup() arguments that contain boolean values
@@ -260,7 +268,7 @@ def setup_cfg_to_setup_kwargs(config):
                 in_cfg_value = False
 
         if in_cfg_value:
-            if arg == 'install_requires':
+            if arg in ('install_requires', 'tests_require'):
                 # Replaces PEP345-style version specs with the sort expected by
                 # setuptools
                 in_cfg_value = [_VERSION_SPEC_RE.sub(r'\1\2', pred)
