@@ -2,7 +2,7 @@ Changes
 =========
 
 
-0.2.9 (unreleased)
+0.2.9 (2013-03-05)
 ------------------
 
 - Fixed a bug in the extra-files supported added in 0.2.8.  Makes sure that
