@@ -5,7 +5,9 @@ Changes
 0.2.9 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Fixed a bug in the extra-files supported added in 0.2.8.  Makes sure that
+  monkey-patches can't be installed more than once and that the log
+  reference is properly encapsulated.
 
 
 0.2.8 (2013-03-05)
