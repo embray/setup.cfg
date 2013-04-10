@@ -5,8 +5,20 @@ Changes
 0.2.10 (unreleased)
 -------------------
 
+- Added support for the ``seutp-requires-dist`` option in the ``[metadata]``
+  section of setup.cfg.  This is analogous to the Setup-Requires-Dist metadata
+  field supported by PEP-426 and uses the ``setup_requires`` argument to
+  setuptools' ``setup()`` to implement it.
+
+- Added support for the ``dependency_links`` and ``include_package_data``
+  arguments to setuptools' ``setup()`` in the ``[backwards_compat]`` section of
+  setup.cfg.
+
 - When a setup_hook calls sys.exit() don't show a traceback for the
   SystemExit exception.
+
+- Fixed a bug in the exception formatting when exceptions occur in setup.cfg
+  handling.
 
 
 0.2.9 (2013-03-05)
