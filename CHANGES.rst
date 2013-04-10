@@ -2,7 +2,7 @@ Changes
 =========
 
 
-0.2.10 (unreleased)
+0.2.10 (2013-04-10)
 -------------------
 
 - Added support for the ``seutp-requires-dist`` option in the ``[metadata]``
