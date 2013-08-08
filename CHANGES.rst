@@ -5,7 +5,8 @@ Changes
 0.2.11 (unreleased)
 -------------------
 
-- Nothing changed yet.
+- Replaced ``distribute_setup.py`` with ``ez_setup.py`` in order to bootstrap
+  with modern setuptools when necessary.
 
 
 0.2.10 (2013-04-10)
