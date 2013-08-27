@@ -88,19 +88,19 @@ def releaser_middle(data):
         msg = "Tagging %s" % (version,)
         cmd = 'git tag -s %s -m "%s"' % (version, msg)
         if os.path.isdir('.git/svn'):
-            print "\nEXPERIMENTAL support for git-svn tagging!\n"
+            print("\nEXPERIMENTAL support for git-svn tagging!\n")
             cur_branch = open('.git/HEAD').read().strip().split('/')[-1]
-            print "You are on branch %s." % (cur_branch,)
+            print("You are on branch %s." % (cur_branch,))
             if cur_branch != 'master':
-                print "Only the master branch is supported for git-svn tagging."
-                print "Please tag yourself."
-                print "'git tag' needs to list tag named %s." % (version,)
+                print("Only the master branch is supported for git-svn tagging.")
+                print("Please tag yourself.")
+                print("'git tag' needs to list tag named %s." % (version,))
                 sys.exit()
             cmd = [cmd]
             local_head = open('.git/refs/heads/master').read()
             trunk = open('.git/refs/remotes/trunk').read()
             if local_head != trunk:
-                print "Your local master diverges from trunk.\n"
+                print("Your local master diverges from trunk.\n")
                 # dcommit before local tagging
                 cmd.insert(0, 'git svn dcommit')
             # create tag in svn
@@ -119,18 +119,18 @@ def releaser_middle(data):
         if not isinstance(cmds, list):
             cmds = [cmds]
         if len(cmds) == 1:
-            print "Tag needed to proceed, you can use the following command:"
+            print("Tag needed to proceed, you can use the following command:")
         for cmd in cmds:
-            print cmd
+            print(cmd)
             if utils.ask("Run this command"):
-                print system(cmd)
+                print(system(cmd))
             else:
                 # all commands are needed in order to proceed normally
-                print "Please create a tag for %s yourself and rerun." % \
-                        (self.data['version'],)
+                print("Please create a tag for %s yourself and rerun." % \
+                        (self.data['version'],))
                 sys.exit()
         if not self.vcs.tag_exists('v' + self.data['version']):
-            print "\nFailed to create tag %s!" % (self.data['version'],)
+            print("\nFailed to create tag %s!" % (self.data['version'],))
             sys.exit()
 
     # Normally all this does is to return '--formats=zip', which is currently
