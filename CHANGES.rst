@@ -8,6 +8,10 @@ Changes
 - Replaced ``distribute_setup.py`` with ``ez_setup.py`` in order to bootstrap
   with modern setuptools when necessary.
 
+- Fixed a couple minor Python 3-specific issues. In particular the
+  ``data_files`` option could be passed to ``setup()`` as a ``dict_items``
+  object instead of a ``list`` which is what would normally be expected.
+
 
 0.2.10 (2013-04-10)
 -------------------
