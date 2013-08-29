@@ -2,7 +2,7 @@ Changes
 =========
 
 
-0.2.11 (unreleased)
+0.2.11 (2013-08-29)
 -------------------
 
 - Replaced ``distribute_setup.py`` with ``ez_setup.py`` in order to bootstrap
