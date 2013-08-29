@@ -12,6 +12,8 @@ Changes
   ``data_files`` option could be passed to ``setup()`` as a ``dict_items``
   object instead of a ``list`` which is what would normally be expected.
 
+- Added a tox.ini (frankly I thought there already was one).
+
 
 0.2.10 (2013-04-10)
 -------------------
