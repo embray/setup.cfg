@@ -1,4 +1,4 @@
-from __future__ import with_statement
+from __future__ import with_statement, unicode_literals
 
 import io
 import os
@@ -14,6 +14,18 @@ from setuptools.sandbox import run_setup
 
 from .util import rmtree, open_config
 from ..util import monkeypatch_method
+
+
+from ..extern import six
+
+if six.PY3:
+    StringIO = io.StringIO
+else:
+    # Use cStringIO on Python 2 to avoid some
+    # fussy unicode issues
+    import cStringIO
+    StringIO = cStringIO.StringIO
+
 
 
 SETUP_CFG_DIR = os.path.abspath(
@@ -79,8 +91,8 @@ class D2to1TestCase(object):
     def run_setup(self, *args):
         old_stdout = sys.stdout
         old_stderr = sys.stderr
-        stdout = sys.stdout = io.StringIO()
-        stderr = sys.stderr = io.StringIO()
+        stdout = sys.stdout = StringIO()
+        stderr = sys.stderr = StringIO()
         try:
             run_setup('setup.py', args)
             returncode = 0
