@@ -1,6 +1,7 @@
 import glob
 import os
 import tarfile
+import sys
 
 from . import D2to1TestCase
 
@@ -9,6 +10,21 @@ VERSION = '0.1.dev'
 
 
 class TestCore(D2to1TestCase):
+    def test_import_setup_cfg(self):
+        """
+        Test importing the main modules of setup.cfg.
+
+        This both tests that importing it is possible, but is also kind
+        of necessary for coverage.py to pick up the fact that those modules
+        were imported.
+        """
+
+        modules = ['setup.cfg', 'setup.cfg.core', 'setup.cfg.util']
+        for module in modules:
+            if module in sys.modules:
+                del sys.modules[module]
+            __import__(module)
+
     def test_setup_py_version(self):
         """
         Test that the `./setup.py --version` command returns the correct

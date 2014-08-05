@@ -213,6 +213,7 @@ def cfg_to_args(path='setup.cfg'):
                     raise DistutilsFileError(
                         '%s from the extra_files option in setup.cfg does not '
                         'exist' % filename)
+
             # Unfortunately the only really sensible way to do this is to
             # monkey-patch the manifest_maker class
             @monkeypatch_method(manifest_maker)
@@ -536,19 +537,41 @@ def split_csv(value):
     return value
 
 
-def monkeypatch_method(cls):
-    """A function decorator to monkey-patch a method of the same name on the
-    given class.
-    """
+class MonkeyPatcher(object):
+    def __init__(self):
+        self._patched = set()
 
-    def wrapper(func):
-        orig = getattr(cls, func.__name__, None)
-        if orig and not hasattr(orig, '_orig'):  # Already patched
-            setattr(func, '_orig', orig)
+    def __call__(self, cls):
+        """
+        A function decorator to monkey-patch a method of the same name on the
+        given class.
+        """
+
+        def wrapper(func):
+            orig = getattr(cls, func.__name__, None)
+            if hasattr(orig, '_orig'):  # Already patched
+                return orig
+
+            func._orig = orig
             setattr(cls, func.__name__, func)
-        return func
+            self._patched.add((cls, orig))
 
-    return wrapper
+            return func
+
+        return wrapper
+
+    def unpatch_all(self):
+        """
+        Remove all monkey-patches.
+        """
+
+        for cls, func in self._patched:
+            setattr(cls, func.__name__, func)
+
+        self._patched.clear()
+
+
+monkeypatch_method = MonkeyPatcher()
 
 
 # The following classes are used to hack Distribution.command_options a bit

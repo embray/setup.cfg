@@ -1,4 +1,6 @@
 from __future__ import with_statement
+
+import io
 import os
 import shutil
 import subprocess
@@ -8,7 +10,10 @@ import textwrap
 
 import pkg_resources
 
+from setuptools.sandbox import run_setup
+
 from .util import rmtree, open_config
+from ..util import monkeypatch_method
 
 
 SETUP_CFG_DIR = os.path.abspath(
@@ -68,14 +73,25 @@ class D2to1TestCase(object):
                 del sys.modules[k]
         rmtree(self.temp_dir)
 
+        # Undo all monkey-patching that occurred during the test
+        monkeypatch_method.unpatch_all()
+
     def run_setup(self, *args):
-        cmd = ('-c',
-               'import sys;sys.path.insert(0, %r);'
-               'from setup.cfg.tests import fake_setup_cfg_dist;'
-               'from setup.cfg.extern.six import exec_;'
-               'fake_setup_cfg_dist();exec_(open("setup.py").read())' %
-               SETUP_CFG_DIR)
-        return self._run_cmd(sys.executable, cmd + args)
+        old_stdout = sys.stdout
+        old_stderr = sys.stderr
+        stdout = sys.stdout = io.StringIO()
+        stderr = sys.stderr = io.StringIO()
+        try:
+            run_setup('setup.py', args)
+            returncode = 0
+        except SystemExit as e:
+            returncode = e.args[0]
+        finally:
+            sys.stdout = old_stdout
+            sys.stderr = old_stderr
+
+        return (stdout.getvalue().strip(), stderr.getvalue().strip(),
+                returncode)
 
     def run_svn(self, *args):
         return self._run_cmd('svn', args)
