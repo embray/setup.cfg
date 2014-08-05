@@ -3,10 +3,10 @@ setup.cfg files.  The only actual functionality this adds is to update the
 version option in a setup.cfg file, if it exists.  If setup.cfg does not exist,
 or does not contain a version option, then this does nothing.
 
-TODO: d2to1 theoretically supports using a different filename for setup.cfg;
-this does not support that.  We could hack in support, though I'm not sure how
-useful the original functionality is to begin with (and it might be removed) so
-we ignore that for now.
+TODO: setup.cfg theoretically supports using a different filename for
+setup.cfg; this does not support that.  We could hack in support, though I'm
+not sure how useful the original functionality is to begin with (and it might
+be removed) so we ignore that for now.
 
 TODO: There exists a proposal
 (http://mail.python.org/pipermail/distutils-sig/2011-March/017628.html) to add

@@ -6,8 +6,8 @@ except ImportError:
     use_setuptools()
     from setuptools import setup
 
-# d2to1 basically installs itself!  See setup.cfg for the project metadata.
-from d2to1.util import cfg_to_args
+# setup.cfg basically installs itself!  See setup.cfg for the project metadata.
+from setup.cfg.util import cfg_to_args
 
 
 setup(**cfg_to_args())

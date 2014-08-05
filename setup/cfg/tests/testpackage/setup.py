@@ -7,6 +7,6 @@ except ImportError:
     from setuptools import setup
 
 setup(
-    setup_requires=['d2to1'],
-    d2to1=True,
+    setup_requires=['setup.cfg'],
+    setup_cfg=True,
 )

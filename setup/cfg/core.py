@@ -13,14 +13,15 @@ from .util import DefaultGetDict, IgnoreDict, cfg_to_args
 _Distribution = _get_unpatched(_Distribution)
 
 
-def d2to1(dist, attr, value):
-    """Implements the actual d2to1 setup() keyword.  When used, this should be
-    the only keyword in your setup() aside from `setup_requires`.
+def setup_cfg(dist, attr, value):
+    """
+    Implements the actual setup_cfg setup() keyword.  When used, this should be
+    the only keyword in your setup() aside from ``setup_requires``.
 
-    If given as a string, the value of d2to1 is assumed to be the relative path
-    to the setup.cfg file to use.  Otherwise, if it evaluates to true, it
-    simply assumes that d2to1 should be used, and the default 'setup.cfg' is
-    used.
+    If given as a string, the value of setup_cfg is assumed to be the relative
+    path to the setup.cfg file to use.  Otherwise, if it evaluates to true, it
+    simply assumes that setup.cfg should be used, and the default 'setup.cfg'
+    file is used.
 
     This works by reading the setup.cfg file, parsing out the supported
     metadata and command options, and using them to rebuild the

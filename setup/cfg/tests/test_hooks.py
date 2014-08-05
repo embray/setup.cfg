@@ -12,12 +12,12 @@ class TestHooks(D2to1TestCase):
         super(TestHooks, self).setup()
         with open_config(os.path.join(self.package_dir, 'setup.cfg')) as cfg:
             cfg.set('global', 'setup-hooks',
-                    'd2to1_testpackage._setup_hooks.test_hook_1\n'
-                    'd2to1_testpackage._setup_hooks.test_hook_2')
+                    'setup_cfg_testpackage._setup_hooks.test_hook_1\n'
+                    'setup_cfg_testpackage._setup_hooks.test_hook_2')
             cfg.set('build_ext', 'pre-hook.test_pre_hook',
-                    'd2to1_testpackage._setup_hooks.test_pre_hook')
+                    'setup_cfg_testpackage._setup_hooks.test_pre_hook')
             cfg.set('build_ext', 'post-hook.test_post_hook',
-                    'd2to1_testpackage._setup_hooks.test_post_hook')
+                    'setup_cfg_testpackage._setup_hooks.test_post_hook')
 
     def test_global_setup_hooks(self):
         """
@@ -43,7 +43,7 @@ class TestHooks(D2to1TestCase):
         stdout, _, return_code = self.run_setup('build_ext')
         assert textwrap.dedent("""
             running build_ext
-            running pre_hook d2to1_testpackage._setup_hooks.test_pre_hook for command build_ext
+            running pre_hook setup_cfg_testpackage._setup_hooks.test_pre_hook for command build_ext
             build_ext pre-hook
         """) in stdout
         assert stdout.endswith('build_ext post-hook')
