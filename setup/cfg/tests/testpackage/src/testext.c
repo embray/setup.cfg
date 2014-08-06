@@ -10,6 +10,7 @@ static PyMethodDef TestextMethods[] = {
 static struct PyModuleDef testextmodule = {
     PyModuleDef_HEAD_INIT,
     "testext",
+    NULL,
     -1,
     TestextMethods
 };
