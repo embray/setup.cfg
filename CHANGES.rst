@@ -2,10 +2,11 @@ Changes
 =========
 
 
-0.2.12 (unreleased)
--------------------
+0.9.0 (unreleased)
+------------------
 
-- Nothing changed yet.
+- Renamed the project from ``d2to1`` to ``setup.cfg`` and added several
+  enhancements to go along with the name change.
 
 
 0.2.11 (2013-08-29)
