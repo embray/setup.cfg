@@ -112,7 +112,7 @@ EXTENSION_FIELDS = set([
 _VERSION_SPEC_RE = re.compile(r'\s*(.*?)\s*\((.*)\)\s*$')
 
 
-def setup_cfg_to_setup(path='setup.cfg'):
+def to_setup(path='setup.cfg'):
     """
     Reads given setup.cfg file and returns keyword arguments to setup().
 

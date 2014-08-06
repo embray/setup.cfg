@@ -8,7 +8,7 @@ from distutils.errors import DistutilsFileError, DistutilsSetupError
 from setuptools.dist import _get_unpatched
 
 from .extern import six
-from .config import setup_cfg_to_setup
+from .config import to_setup
 from .util import DefaultGetDict, IgnoreDict
 
 
@@ -50,7 +50,7 @@ def setup_cfg(dist, attr, value):
 
     # Converts the setup.cfg file to setup() arguments
     try:
-        attrs = setup_cfg_to_setup(path)
+        attrs = to_setup(path)
     except:
         e = sys.exc_info()[1]
         raise DistutilsSetupError(
