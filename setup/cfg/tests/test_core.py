@@ -19,7 +19,8 @@ class TestCore(D2to1TestCase):
         were imported.
         """
 
-        modules = ['setup.cfg', 'setup.cfg.core', 'setup.cfg.util']
+        modules = ['setup.cfg', 'setup.cfg.core', 'setup.cfg.config',
+                   'setup.cfg.util']
         for module in modules:
             if module in sys.modules:
                 del sys.modules[module]
