@@ -2,15 +2,21 @@ import os
 import sys
 import warnings
 
+from distutils import log
 from distutils.core import Distribution as _Distribution
 from distutils.errors import DistutilsFileError, DistutilsSetupError
 from setuptools.dist import _get_unpatched
 
 from .extern import six
-from .util import DefaultGetDict, IgnoreDict, cfg_to_args
+from .config import setup_cfg_to_setup
+from .util import DefaultGetDict, IgnoreDict
+
+
+log.set_verbosity(log.INFO)
 
 
 _Distribution = _get_unpatched(_Distribution)
+
 
 
 def setup_cfg(dist, attr, value):
@@ -44,7 +50,7 @@ def setup_cfg(dist, attr, value):
 
     # Converts the setup.cfg file to setup() arguments
     try:
-        attrs = cfg_to_args(path)
+        attrs = setup_cfg_to_setup(path)
     except:
         e = sys.exc_info()[1]
         raise DistutilsSetupError(

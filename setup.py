@@ -7,7 +7,7 @@ except ImportError:
     from setuptools import setup
 
 # setup.cfg basically installs itself!  See setup.cfg for the project metadata.
-from setup.cfg.util import cfg_to_args
+from setup.cfg import setup_cfg_to_setup
 
 
-setup(**cfg_to_args())
+setup(**setup_cfg_to_setup())
