@@ -1,72 +1,75 @@
 Introduction
 ==============
-.. image:: https://travis-ci.org/iguananaut/d2to1.png?branch=master
+.. image:: https://travis-ci.org/embray/setup.cfg.png?branch=master
    :alt: travis build status
-   :target: https://travis-ci.org/iguananaut/d2to1
+   :target: https://travis-ci.org/embray/setup.cfg
 
-d2to1 (the 'd' is for 'distutils') allows using distutils2-like setup.cfg files
-for a package's metadata with a distribute/setuptools setup.py script.  It
-works by providing a distutils2-formatted setup.cfg file containing all of a
-package's metadata, and a very minimal setup.py which will slurp its arguments
-from the setup.cfg.
+``setup.cfg`` is a cheekily named Python package which supports providing
+all of a Python distribution's metadata and build configuration via the
+``setup.cfg`` *file* at the base of the distribution's source tree, rather
+than in the ``setup.py`` script.
 
-Note: distutils2 has been merged into the CPython standard library, where it is
-now known as 'packaging'.  This project was started before that change was
-finalized.  So all references to distutils2 should also be assumed to refer to
-packaging.
+The standard ``setup.py`` script is reduced to a stub which uses the
+``setup.cfg`` package to convert the contents of the ``setup.cfg`` file to
+keyword arguments understood by the ``setup()`` function (in particular, the
+implementation provided by setuptools).  Thus all the standard functionality of
+the ``setup.py`` script is still supported for tools and procedures that use
+it.
 
-Rationale
-===========
-I'm currently in the progress of redoing the packaging of a sizeable number of
-projects.  I wanted to use distutils2-like setup.cfg files for all these
-projects, as they will hopefully be the future, and I much prefer them overall
-to using an executable setup.py.  So forward-support for distutils2 is
-appealing both as future-proofing, and simply the aesthetics of using a flat text file to describe a project's metadata.
+In other words, rather than defining your project in a source file, it is
+defined in an easy to parse, easy to read plain-text file.  However, several
+hook points are still provided where Python functions can modify the build
+process if necessary.  But efforts are made to minimize the need for this
+in the majority of Python projects.
 
-However, I did not want any of these projects to require distutils2 for
-installation yet--it is too unstable, and not widely installed.  So projects
-should still be installable using the familiar `./setup.py install`, for
-example.  Furthermore, not all use cases required by some of the packages I
-support are fully supported by distutils2 yet.  Hopefully they will be
-eventually, either through the distutils2 core or through extensions.  But in
-the meantime d2to1 will try to keep up with the state of the art and "best
-practices" for distutils2 distributions, while adding support in areas that
-it's lacking.
+This package was originally called ``d2to1``, and was intended as a temporary
+translation layer between the original distutils and the ill-fated distutils2
+project.  distutils2 introduced the idea of providing all the project's
+metadata and build configuration via the ``setup.cfg`` file.  *This* project
+takes the same idea but goes beyond what was fully supported by distutils2.
+
 
 Usage
 =======
-d2to1 requires a distribution to use distribute or setuptools.  Your
-distribution must include a distutils2-like setup.cfg file, and a minimal
-setup.py script.  For details on writing the setup.cfg, see the `distutils2
-documentation`_.  A simple sample can be found in d2to1's own setup.cfg (it
-uses its own machinery to install itself)::
+``setup.cfg`` *requires* a distribution to use setuptools.  Your distribution
+must include a specially-formatted "setup.cfg" file, and a minimal "setup.py"
+script.  For details on writing the setup.cfg, see the `distutils2
+documentation`_.  A simple sample can be found in ``setup.cfg``'s own setup.cfg
+file (it uses its own machinery to install itself)::
 
- [metadata]
- name = d2to1
- version = 0.1.1
- author = Erik M. Bray
- author-email = embray at stsci.edu
- summary = Allows using distutils2-like setup.cfg files for a package's metadata
-  with a distribute/setuptools setup.py
- description-file = README
- license = BSD
- requires-dist = setuptools
- classifier =
-     Development Status :: 4 - Beta
-     Environment :: Plugins
-     Framework :: Setuptools Plugin
-     Intended Audience :: Developers
-     License :: OSI Approved :: BSD License
-     Operating System :: OS Independent
-     Programming Language :: Python
-     Topic :: Software Development :: Build Tools
-     Topic :: Software Development :: Libraries :: Python Modules
-     Topic :: System :: Archiving :: Packaging
- keywords =
-     setup
-     distutils
- [files]
- packages = d2to1
+    [metadata]
+    name = setup.cfg
+    version = 0.9.0.dev
+    author = Erik M. Bray
+    author-email = embray@stsci.edu
+    summary = Reads a distributions's metadata from its setup.cfg file and passes it to setuptools.setup()
+    description-file =
+        README.rst
+        CHANGES.rst
+    home-page = http://pypi.python.org/pypi/setup.cfg
+    requires-dist = setuptools
+    classifier = 
+        Development Status :: 5 - Production/Stable
+        Environment :: Plugins
+        Framework :: Setuptools Plugin
+        Intended Audience :: Developers
+        License :: OSI Approved :: BSD License
+        Operating System :: OS Independent
+        Programming Language :: Python
+        Programming Language :: Python :: 3
+        Topic :: Software Development :: Build Tools
+        Topic :: Software Development :: Libraries :: Python Modules
+        Topic :: System :: Archiving :: Packaging
+
+    [files]
+    packages =
+        setup
+        setup.cfg
+        setup.cfg.extern
+    extra_files =
+        CHANGES.rst
+        LICENSE
+        ez_setup.py
 
 The minimal setup.py should look something like this::
 
@@ -75,36 +78,22 @@ The minimal setup.py should look something like this::
  try:
      from setuptools import setup
  except ImportError:
-     from distribute_setup import use_setuptools
+     from ez_setup import use_setuptools
      use_setuptools()
      from setuptools import setup
 
  setup(
-     setup_requires=['d2to1'],
-     d2to1=True
+     setup_requires=['setup.cfg'],
+     setup_cfg=True
  )
 
-Note that it's important to specify d2to1=True or else the d2to1 functionality
-will not be enabled.  It is also possible to set d2to1='some_file.cfg' to
-specify the (relative) path of the setup.cfg file to use.  But in general this
-functionality should not be necessary.
+Note that it's important to specify ``setup_cfg=True`` or else the
+``setup.cfg`` functionality will not be enabled.  It is also possible to set
+``setup_cfg='some_file.cfg'`` to specify the (relative) path of the setup.cfg
+file to use.  But in general this functionality should not be necessary.
 
-It should also work fine if additional arguments are passed to `setup()`,
-but it should be noted that they will be clobbered by any options in the
-setup.cfg file.
-
-Caveats
-=========
-- The requires-dist option in setup.cfg is implemented through the
-  distribute/setuptools install_requires option, rather than the broken
-  "requires" keyword in normal distutils.
-- Not all features of distutils2 are supported yet.  If something doesn't seem
-  to be working, it's probably not implemented yet.
-- Does not support distutils2 resources, and probably won't since it relies
-  heavily on the sysconfig module only available in Python 3.2 and up.  This is
-  one area in which d2to1 should really be seen as a transitional tool.  I
-  don't really want to include a backport like distutils2 does.  In the
-  meantime, package_data and data_files may still be used under the [files]
-  section of setup.cfg.
+It should also work fine if additional arguments are passed to ``setup()``, but
+it should be noted that they will be clobbered by any options in the setup.cfg
+file.
 
 .. _distutils2 documentation: http://distutils2.notmyidea.org/setupcfg.html
