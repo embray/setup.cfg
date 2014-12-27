@@ -96,4 +96,4 @@ It should also work fine if additional arguments are passed to ``setup()``, but
 it should be noted that they will be clobbered by any options in the setup.cfg
 file.
 
-.. _distutils2 documentation: http://distutils2.notmyidea.org/setupcfg.html
+.. _distutils2 documentation: http://alexis.notmyidea.org/distutils2/setupcfg.html
